@@ -15,6 +15,15 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + "/views/index.html");
 });
 
+app.get("/api/whoami", (req, res) => {
+  const ipaddress =
+    req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const language = req.headers["accept-language"];
+  const software = req.headers["user-agent"];
+
+  res.json({ ipaddress, language, software });
+});
+
 // listen for requests :)
 app.listen(port, function () {
   console.log(`Your app is listening on port ${port}`);
